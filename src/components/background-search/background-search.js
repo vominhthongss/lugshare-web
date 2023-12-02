@@ -17,10 +17,13 @@ function BackgroundSearch() {
     data.dateRange = getValues("dateRange");
     console.log("data:", data);
   };
-  const [selectedDateRange, setSelectedDateRange] = useState(null);
   const handleDateRangeChange = (newDateRange) => {
-    setSelectedDateRange(newDateRange);
     setValue("dateRange", newDateRange);
+  };
+  const [type, setType] = useState("carrier");
+  const handleSetType = (type) => {
+    setValue("type", type);
+    setType(type);
   };
 
   return (
@@ -46,7 +49,7 @@ function BackgroundSearch() {
           </span>
         </NavLink>
       </div>
-      <div className="flex flex-col items-center p-4 absolute bottom-1/2 translate-y-1/2 md:right-10 md:translate-x-0 right-1/2 translate-x-1/2 border rounded-md bg-main shadow-sm w-[35rem] h-[25rem]">
+      <div className="flex space-y-8 flex-col items-center p-4 absolute bottom-1/2 translate-y-1/2 md:right-10 md:translate-x-0 right-1/2 translate-x-1/2 border rounded-md bg-main shadow-sm w-[35rem] h-[30rem]">
         <span className="text-black font-extrabold text-2xl">
           Search your trip details to start sending
         </span>
@@ -66,6 +69,23 @@ function BackgroundSearch() {
               variant="outlined"
               {...register("destination")}
             />
+            <div
+              {...register("type", { value: "carrier" })}
+              className="flex space-x-2"
+            >
+              <Button
+                variant={`${type === "carrier" ? "contained" : "outlined"}`}
+                onClick={() => handleSetType("carrier")}
+              >
+                Carrier
+              </Button>
+              <Button
+                variant={`${type === "sender" ? "contained" : "outlined"}`}
+                onClick={() => handleSetType("sender")}
+              >
+                Sender
+              </Button>
+            </div>
             <div {...register("dateRange")}>
               <DateRange onDateRangeChange={handleDateRangeChange} />
             </div>
