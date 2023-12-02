@@ -5,7 +5,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
 import { TextField } from "@mui/material";
 
-function DateRange({ onDateRangeChange }) {
+function DateRange({ register }) {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -27,9 +27,6 @@ function DateRange({ onDateRangeChange }) {
   };
   const handleDateRangeChange = (newDateRange) => {
     setState(newDateRange);
-    if (onDateRangeChange) {
-      onDateRangeChange(newDateRange);
-    }
   };
 
   const formatDateString = (date) => {
@@ -42,7 +39,7 @@ function DateRange({ onDateRangeChange }) {
 
   const dateRangeString = `${formatDateString(
     state[0].startDate
-  )}  ${formatDateString(state[0].endDate)}`;
+  )} → ${formatDateString(state[0].endDate)}`;
 
   useEffect(() => {
     handleDateRangeChange(state);
@@ -61,6 +58,18 @@ function DateRange({ onDateRangeChange }) {
         variant="outlined"
         onFocus={toggleDateRange}
         value={dateRangeString}
+      />
+      <input
+        {...register("startDate")}
+        value={state[0].startDate}
+        type="text"
+        hidden
+      />
+      <input
+        {...register("endDate")}
+        value={state[0].startDate}
+        type="text"
+        hidden
       />
       <div
         className={`absolute right-0 top-2 z-10 ${

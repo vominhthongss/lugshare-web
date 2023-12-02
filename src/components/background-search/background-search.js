@@ -14,11 +14,7 @@ function BackgroundSearch() {
   } = useForm();
 
   const handleSearch = (data) => {
-    data.dateRange = getValues("dateRange");
     console.log("data:", data);
-  };
-  const handleDateRangeChange = (newDateRange) => {
-    setValue("dateRange", newDateRange);
   };
   const [type, setType] = useState("carrier");
   const handleSetType = (type) => {
@@ -86,8 +82,8 @@ function BackgroundSearch() {
                 Sender
               </Button>
             </div>
-            <div {...register("dateRange")}>
-              <DateRange onDateRangeChange={handleDateRangeChange} />
+            <div>
+              <DateRange register={register} />
             </div>
             <Button type="submit" sx={{ width: "100%" }} variant="contained">
               Search
