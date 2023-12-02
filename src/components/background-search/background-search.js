@@ -75,12 +75,14 @@ function BackgroundSearch() {
               <Button
                 variant={`${type === "carrier" ? "contained" : "outlined"}`}
                 onClick={() => handleSetType("carrier")}
+                sx={{ height: "3rem" }}
               >
                 Carrier
               </Button>
               <Button
                 variant={`${type === "sender" ? "contained" : "outlined"}`}
                 onClick={() => handleSetType("sender")}
+                sx={{ height: "3rem" }}
               >
                 Sender
               </Button>
