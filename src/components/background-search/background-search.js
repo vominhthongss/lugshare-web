@@ -1,7 +1,28 @@
 import { Button, TextField } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import DateRange from "../date-range/date-range";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function BackgroundSearch() {
+  const {
+    register,
+    getValues,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleSearch = (data) => {
+    data.dateRange = getValues("dateRange");
+    console.log("data:", data);
+  };
+  const [selectedDateRange, setSelectedDateRange] = useState(null);
+  const handleDateRangeChange = (newDateRange) => {
+    setSelectedDateRange(newDateRange);
+    setValue("dateRange", newDateRange);
+  };
+
   return (
     <div className="relative">
       <div className="h-[35rem]">
@@ -29,23 +50,30 @@ function BackgroundSearch() {
         <span className="text-black font-extrabold text-2xl">
           Search your trip details to start sending
         </span>
-        <div className="space-y-5">
-          <TextField
-            sx={{ width: "100%" }}
-            id="outlined-basic"
-            label="Departure"
-            variant="outlined"
-          />
-          <TextField
-            sx={{ width: "100%" }}
-            id="outlined-basic"
-            label="Destination"
-            variant="outlined"
-          />
-          <Button sx={{ width: "100%" }} variant="contained">
-            Search
-          </Button>
-        </div>
+        <form onSubmit={handleSubmit((data) => handleSearch(data))}>
+          <div className="space-y-5">
+            <TextField
+              sx={{ width: "100%" }}
+              id="outlined-basic"
+              label="Departure"
+              variant="outlined"
+              {...register("departure")}
+            />
+            <TextField
+              sx={{ width: "100%" }}
+              id="outlined-basic"
+              label="Destination"
+              variant="outlined"
+              {...register("destination")}
+            />
+            <div {...register("dateRange")}>
+              <DateRange onDateRangeChange={handleDateRangeChange} />
+            </div>
+            <Button type="submit" sx={{ width: "100%" }} variant="contained">
+              Search
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );
