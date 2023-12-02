@@ -49,7 +49,10 @@ function BackgroundSearch() {
         <span className="text-black font-extrabold text-2xl">
           Search your trip details to start sending
         </span>
-        <form onSubmit={handleSubmit((data) => handleSearch(data))}>
+        <form
+          className="w-full px-4"
+          onSubmit={handleSubmit((data) => handleSearch(data))}
+        >
           <div className="space-y-5">
             <TextField
               sx={{ width: "100%" }}
@@ -85,7 +88,11 @@ function BackgroundSearch() {
             <div>
               <DateRange register={register} />
             </div>
-            <Button type="submit" sx={{ width: "100%" }} variant="contained">
+            <Button
+              type="submit"
+              sx={{ width: "100%", height: "3rem" }}
+              variant="contained"
+            >
               Search
             </Button>
           </div>
