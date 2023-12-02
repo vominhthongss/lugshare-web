@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
-    <div className="flex flex-col h-[100%]">
+    <div className="flex flex-col h-full">
       <Router>
         <Navigation />
         <Routes>
