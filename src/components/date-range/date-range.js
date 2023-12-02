@@ -4,8 +4,9 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker } from "react-date-range";
 import { TextField } from "@mui/material";
+import "./date-range.css";
 
-function DateRange({ register }) {
+function DateRange({ register, from, to }) {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -60,17 +61,12 @@ function DateRange({ register }) {
         value={dateRangeString}
       />
       <input
-        {...register("startDate")}
+        {...register(from)}
         value={state[0].startDate}
         type="text"
         hidden
       />
-      <input
-        {...register("endDate")}
-        value={state[0].startDate}
-        type="text"
-        hidden
-      />
+      <input {...register(to)} value={state[0].startDate} type="text" hidden />
       <div
         className={`absolute right-0 top-2 z-10 ${
           showDateRange ? "block" : "hidden"

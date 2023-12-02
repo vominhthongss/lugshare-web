@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 function BackgroundSearch() {
   const {
     register,
-    getValues,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -88,7 +87,11 @@ function BackgroundSearch() {
               </Button>
             </div>
             <div>
-              <DateRange register={register} />
+              <DateRange
+                register={register}
+                from={"startDate"}
+                to={"endDate"}
+              />
             </div>
             <Button
               type="submit"
