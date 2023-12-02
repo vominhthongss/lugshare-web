@@ -3,22 +3,17 @@ import { NavLink } from "react-router-dom";
 import DateRange from "../date-range/date-range";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import SwitchButton from "../switch-button/switch-button";
 
 function BackgroundSearch() {
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
   const handleSearch = (data) => {
     console.log("data:", data);
-  };
-  const [type, setType] = useState("carrier");
-  const handleSetType = (type) => {
-    setValue("type", type);
-    setType(type);
   };
 
   return (
@@ -67,32 +62,15 @@ function BackgroundSearch() {
               variant="outlined"
               {...register("destination")}
             />
-            <div
-              {...register("type", { value: "carrier" })}
-              className="flex space-x-2"
-            >
-              <Button
-                variant={`${type === "carrier" ? "contained" : "outlined"}`}
-                onClick={() => handleSetType("carrier")}
-                sx={{ height: "3rem" }}
-              >
-                Carrier
-              </Button>
-              <Button
-                variant={`${type === "sender" ? "contained" : "outlined"}`}
-                onClick={() => handleSetType("sender")}
-                sx={{ height: "3rem" }}
-              >
-                Sender
-              </Button>
-            </div>
-            <div>
-              <DateRange
-                register={register}
-                from={"startDate"}
-                to={"endDate"}
-              />
-            </div>
+            <SwitchButton
+              register={register}
+              name={"type"}
+              label1={"Carrier"}
+              label2={"Sender"}
+              value1={"carrier"}
+              value2={"sender"}
+            />
+            <DateRange register={register} from={"startDate"} to={"endDate"} />
             <Button
               type="submit"
               sx={{ width: "100%", height: "3rem" }}

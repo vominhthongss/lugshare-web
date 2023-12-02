@@ -66,9 +66,9 @@ function DateRange({ register, from, to }) {
         type="text"
         hidden
       />
-      <input {...register(to)} value={state[0].startDate} type="text" hidden />
+      <input {...register(to)} value={state[0].endDate} type="text" hidden />
       <div
-        className={`absolute right-0 top-2 z-10 ${
+        className={`absolute right-0 bottom-16 z-10 ${
           showDateRange ? "block" : "hidden"
         }`}
       >
