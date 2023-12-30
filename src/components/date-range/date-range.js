@@ -6,14 +6,19 @@ import { DateRangePicker } from "react-date-range";
 import { TextField } from "@mui/material";
 import "./date-range.css";
 
-function DateRange({ register, from, to }) {
+function DateRange({ register, setValue, from, to, label, isRequired }) {
   const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate: addDays(new Date(), 1),
       key: "selection",
     },
   ]);
+
+  let validationRules = {};
+  if (isRequired) {
+    validationRules = { required: `${label} is required.` };
+  }
 
   const [showDateRange, setShowDateRange] = useState(false);
   const dateRangeRef = useRef(null);
@@ -28,6 +33,8 @@ function DateRange({ register, from, to }) {
   };
   const handleDateRangeChange = (newDateRange) => {
     setState(newDateRange);
+    setValue(from, formatDateString(newDateRange[0].startDate));
+    setValue(to, formatDateString(newDateRange[0].endDate));
   };
 
   const formatDateString = (date) => {
@@ -61,12 +68,17 @@ function DateRange({ register, from, to }) {
         value={dateRangeString}
       />
       <input
-        {...register(from)}
+        {...register(from, validationRules)}
         value={state[0].startDate}
         type="text"
         hidden
       />
-      <input {...register(to)} value={state[0].endDate} type="text" hidden />
+      <input
+        {...register(to, validationRules)}
+        value={state[0].endDate}
+        type="text"
+        hidden
+      />
       <div
         className={`absolute right-0 bottom-16 z-10 ${
           showDateRange ? "block" : "hidden"

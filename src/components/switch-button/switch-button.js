@@ -1,25 +1,51 @@
-import { Button } from "@mui/material";
 import { useState } from "react";
+import ThemeButton from "../theme-button/theme-button";
 
-function SwitchButton({ register, name, label1, value1, label2, value2 }) {
-  const [type, setType] = useState(value1);
+function SwitchButton({
+  register,
+  setValue,
+  label,
+  name,
+  label1,
+  value1,
+  label2,
+  value2,
+  isRequired,
+  defaultValue,
+}) {
+  const [type, setType] = useState(defaultValue ?? value1);
+  let validationRules = {};
+  if (isRequired) {
+    validationRules = { required: `${label} is required.` };
+  }
   return (
     <div className="flex space-x-2">
-      <Button
+      <ThemeButton
+        name={label1}
         variant={`${type === value1 ? "contained" : "outlined"}`}
-        onClick={() => setType(value1)}
-        sx={{ height: "3rem" }}
-      >
-        {label1}
-      </Button>
-      <Button
+        height={"3rem"}
+        width={"fit-content"}
+        onClick={() => {
+          setType(value1);
+          setValue(name, value1);
+        }}
+      />
+      <ThemeButton
+        name={label2}
         variant={`${type === value2 ? "contained" : "outlined"}`}
-        onClick={() => setType(value2)}
-        sx={{ height: "3rem" }}
-      >
-        {label2}
-      </Button>
-      <input type="text" value={type} {...register(name)} hidden />
+        height={"3rem"}
+        width={"fit-content"}
+        onClick={() => {
+          setType(value2);
+          setValue(name, value2);
+        }}
+      />
+      <input
+        type="text"
+        value={type}
+        {...register(name, validationRules)}
+        hidden
+      />
     </div>
   );
 }
