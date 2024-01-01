@@ -7,9 +7,12 @@ import LazyLoad from "react-lazy-load";
 import { orderMock } from "../../mock/orders";
 import Login from "../../components/login/login";
 import CustomModal from "../../components/cusom-modal/custom-modal";
+import { getOrderList } from "../../store/order/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback } from "react";
 
 function Home() {
-  const orders = orderMock;
+  const { isLoading, orderList, error } = useSelector(state => state.order);
   const options = {
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -32,6 +35,17 @@ function Home() {
       partialVisibilityGutter: 30,
     },
   };
+
+  const dispatch = useDispatch();
+
+  const fetch = useCallback(() => {
+    dispatch(getOrderList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch])
+
   return (
     <div>
       <BackgroundSearch />
@@ -160,7 +174,7 @@ function Home() {
       </LazyLoad>
       <LazyLoad className="md:h-[300px] h-full" threshold={0.25}>
         <Carousel responsive={options} partialVisible={false} className="flex">
-          {orders.map((order, index) => (
+          {orderList && orderList.map((order, index) => (
             <div key={index} className="p-4">
               <OrderCard order={order} index={index} />
             </div>
