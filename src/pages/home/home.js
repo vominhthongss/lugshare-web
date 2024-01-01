@@ -172,15 +172,17 @@ function Home() {
           </div>
         </div>
       </LazyLoad>
-      <LazyLoad className="md:h-[300px] h-full" threshold={0.25}>
+      {
+        orderList && <LazyLoad className="md:h-[300px] h-full" threshold={0.25}>
         <Carousel responsive={options} partialVisible={false} className="flex">
-          {orderList && orderList.map((order, index) => (
+          {orderList.map((order, index) => (
             <div key={index} className="p-4">
               <OrderCard order={order} index={index} />
             </div>
           ))}
         </Carousel>
       </LazyLoad>
+      }
       <LazyLoad height={"full"} threshold={0.25}>
         <div>
           <div className="flex flex-col items-center md:px-[20%] px-0 space-y-5 py-10">
