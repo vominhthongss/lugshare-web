@@ -2,6 +2,7 @@ import Skeleton from "@mui/material/Skeleton";
 function OrderCard({ order, index }) {
   return (
     <div className="bg-white p-4 rounded shadow-md hover:shadow-lg border cursor-pointer">
+      <h2>{order.order_type === 0 ? "Carrier" : "Sender/Receiver"}</h2>
       <h2 className="text-xl font-bold mb-2">
         {order.title ?? (
           <Skeleton variant="text" sx={{ fontSize: "1rem", width: "100%" }} />
