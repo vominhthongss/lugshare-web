@@ -7,9 +7,11 @@ import OrderCard from "../../components/order-card/order-card";
 import RadioButtonsGroup from "../../components/radio-button-group/radio-button-group";
 import CheckboxGroup from "../../components/checkbox-group/checkbox-group";
 import { ErrorMessage } from "@hookform/error-message";
-
+import { getOrderList } from "../../store/order/orderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback } from "react";
 function Finding() {
-  const orders = orderMock;
+  const { isLoading, orderList, error } = useSelector(state => state.order);
   const sorts = [
     { id: 1, name: "Lowest price" },
     { id: 2, name: "Highest price" },
@@ -53,12 +55,23 @@ function Finding() {
   const handleFilter = (data) => {
     console.log("data:", data);
   };
+
+  const dispatch = useDispatch();
+
+  const fetch = useCallback(() => {
+    dispatch(getOrderList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch])
+
   return (
     <div className="xl:px-36 lg:px-10 md:px-6 sm:px-5 px-0 py-4">
       <SearchForm shape={"vertical"} />
       <div className="w-full flex md:flex-row flex-col-reverse mt-10 px-3 md:space-x-2 space-x-0">
         <div className="md:w-3/4 w-full space-y-5">
-          {orders.map((order, index) => (
+          {orderList && orderList.map((order, index) => (
             <div key={index}>
               <OrderCard order={order} index={index} />
             </div>

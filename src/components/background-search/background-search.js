@@ -16,11 +16,12 @@ function BackgroundSearch() {
       </div>
       <div className="lg:flex flex-col space-y-5 w-[30rem] absolute  hidden bottom-1/2 translate-y-1/2 md:left-10 md:translate-x-0 left-1/2 translate-x-1/2">
         <span className="text-white font-extrabold text-4xl">
-          Earn $200+ USD every time you travel abroad
+          Travel Smarter, Earn More Cash ! Do it now !
         </span>
         <span className="text-white text-2xl">
-          Deliver products to international shoppers and cut your travel costs
-          in half.
+          Are you planning an international trip? Turn your journey into an
+          earning opportunity! With our unique service, you can earn over $200
+          USD every time you travel abroad.
         </span>
         <NavLink to={"#"}>
           <span className="text-white text-lg hover:underline">
