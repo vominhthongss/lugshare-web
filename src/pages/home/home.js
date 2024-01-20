@@ -4,9 +4,6 @@ import BackgroundSearch from "../../components/background-search/background-sear
 import OrderCard from "../../components/order-card/order-card";
 import ThemeButton from "../../components/theme-button/theme-button";
 import LazyLoad from "react-lazy-load";
-import { orderMock } from "../../mock/orders";
-import Login from "../../components/login/login";
-import CustomModal from "../../components/cusom-modal/custom-modal";
 import { getOrderList } from "../../store/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
@@ -181,7 +178,7 @@ function Home() {
           >
             {orderList.map((order, index) => (
               <div key={index} className="p-4">
-                <OrderCard order={order} index={index} />
+                <OrderCard order={order} index={index}  />
               </div>
             ))}
           </Carousel>

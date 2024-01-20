@@ -1,5 +1,6 @@
+import ThemeButton from "../../components/theme-button/theme-button";
 import Skeleton from "@mui/material/Skeleton";
-function OrderCard({ order, index }) {
+function OrderCard({ order, index}) {
   return (
     <div className="bg-white p-4 rounded shadow-md hover:shadow-lg border cursor-pointer">
       <h2
@@ -27,19 +28,21 @@ function OrderCard({ order, index }) {
           )}
         </p>
       </div>
-      <p className="mb-2 flex">
-        ✈️{" "}
-        {order.departure_location ?? (
-          <Skeleton variant="text" sx={{ fontSize: "1rem", width: "100%" }} />
-        )}
-      </p>
-      <p>↓</p>
-      <p className="mb-2 flex">
-        ⛳️{" "}
-        {order.arrival_location ?? (
-          <Skeleton variant="text" sx={{ fontSize: "1rem", width: "100%" }} />
-        )}
-      </p>
+      <div className="flex justify-normal space-x-2">
+        <p className="mb-2 flex">
+          ✈️{" "}
+          {order.departure_location ?? (
+            <Skeleton variant="text" sx={{ fontSize: "1rem", width: "100%" }} />
+          )}
+        </p>
+        <p>→</p>
+        <p className="mb-2 flex">
+          ⛳️{" "}
+          {order.arrival_location ?? (
+            <Skeleton variant="text" sx={{ fontSize: "1rem", width: "100%" }} />
+          )}
+        </p>
+      </div>
       <p className="mb-2 flex">
         ⏱️{" "}
         {order.posted_time ?? (
@@ -72,6 +75,14 @@ function OrderCard({ order, index }) {
               )}{" "}
               $
             </p>
+          </div>
+          <div className="w-full flex justify-center mt-4">
+            <ThemeButton
+              name={"Make Delivery Offer"}
+              variant={"contained"}
+              height={"3rem"}
+              style={{ width: "100%" }}
+            />
           </div>
         </>
       ) : (
