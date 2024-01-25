@@ -60,7 +60,6 @@ function Home() {
   return (
     <div>
       <BackgroundSearch />
-
       <div className="bg-blue-50 w-full flex md:flex-row flex-col justify-between px-32 py-10">
         <div className="flex flex-row items-center space-x-2">
           <svg
@@ -174,9 +173,9 @@ function Home() {
             </span>
           </div>
           <div className="w-full flex justify-center">
-            <Link to={"/finding"}>
+            <Link to={"/finding"} className="animate-bounce">
               <ThemeButton
-                name={"Finding"}
+                name={"Find orders"}
                 variant={"contained"}
                 height={"3rem"}
                 width={"10rem"}

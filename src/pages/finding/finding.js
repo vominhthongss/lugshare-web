@@ -5,12 +5,17 @@ import ThemeButton from "../../components/theme-button/theme-button";
 import OrderCard from "../../components/order-card/order-card";
 import RadioButtonsGroup from "../../components/radio-button-group/radio-button-group";
 import CheckboxGroup from "../../components/checkbox-group/checkbox-group";
-import { getOrderList, unmounteOrder } from "../../store/order/orderSlice";
+import {
+  getOrderList,
+  searchOrderList,
+  unmounteOrder,
+} from "../../store/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { failed } from "../../constants/store";
 import { setAlert } from "../../store/main/mainSlice";
 import { errorAlert } from "../../constants/alerts";
+import { Pagination } from "@mui/material";
 function Finding() {
   const { status, orderList, error } = useSelector((state) => state.order);
   const sorts = [
@@ -57,8 +62,22 @@ function Finding() {
     console.log("data:", data);
   };
 
+  const handleSearch = (data) => {
+    const order_type = data.type === "carrier" ? 0 : 1;
+    dispatch(searchOrderList(order_type));
+  };
+
   const dispatch = useDispatch();
 
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 5;
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const currentItems = orderList
+    ? orderList.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    : [];
   useEffect(() => {
     if (!orderList) {
       dispatch(getOrderList());
@@ -79,15 +98,25 @@ function Finding() {
 
   return (
     <div className="xl:px-36 lg:px-10 md:px-6 sm:px-5 px-0 py-4">
-      <SearchForm shape={"vertical"} />
+      <SearchForm shape={"vertical"} handleSearch={handleSearch} />
       <div className="w-full flex md:flex-row flex-col-reverse mt-10 px-3 md:space-x-2 space-x-0">
         <div className="md:w-3/4 w-full space-y-5">
           {orderList &&
-            orderList.map((order, index) => (
+            currentItems.map((order, index) => (
               <div key={index}>
                 <OrderCard order={order} index={index} />
               </div>
             ))}
+          {currentItems.length > 0 && (
+            <Pagination
+              count={Math.ceil(
+                (orderList ? orderList.length : 0) / itemsPerPage
+              )}
+              page={page}
+              onChange={handleChangePage}
+              color="primary"
+            />
+          )}
         </div>
         <form
           onSubmit={handleSubmit((data) => handleFilter(data))}

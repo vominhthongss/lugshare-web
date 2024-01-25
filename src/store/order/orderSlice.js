@@ -10,8 +10,15 @@ const initialState = {
 
 export const getOrderList = createAsyncThunk("order/getOrderList", async () => {
   const response = await api.get("/orders");
-  return response.data;
+  return response.data.data;
 });
+export const searchOrderList = createAsyncThunk(
+  "order/searchOrderList",
+  async (order_type) => {
+    const response = await api.get("/orders");
+    return response.data.data.filter((x) => x.order_type === order_type);
+  }
+);
 
 export const orderSlice = createSlice({
   name: "order",
@@ -29,10 +36,20 @@ export const orderSlice = createSlice({
       })
       .addCase(getOrderList.fulfilled, (state, action) => {
         state.status = succeeded;
-        const { data } = action.payload;
-        state.orderList = data;
+        state.orderList = action.payload;
       })
       .addCase(getOrderList.rejected, (state, action) => {
+        state.status = failed;
+        state.error = errorOrders;
+      })
+      .addCase(searchOrderList.pending, (state) => {
+        state.status = loading;
+      })
+      .addCase(searchOrderList.fulfilled, (state, action) => {
+        state.status = succeeded;
+        state.orderList = action.payload;
+      })
+      .addCase(searchOrderList.rejected, (state, action) => {
         state.status = failed;
         state.error = errorOrders;
       });

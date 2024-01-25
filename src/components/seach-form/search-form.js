@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import ThemeButton from "../theme-button/theme-button";
 import CustomSelect from "../custom-select/custom-select";
 
-function SearchForm({ shape }) {
+function SearchForm({ shape, handleSearch }) {
   const countries = [
     { id: 1, name: "Viet Nam" },
     { id: 2, name: "Singapore" },
@@ -17,15 +17,15 @@ function SearchForm({ shape }) {
     formState: { errors },
   } = useForm();
 
-  const handleSearch = (data) => {
-    console.log("data:", data);
+  const onSubmit = (data) => {
+    handleSearch(data);
   };
 
   if (shape === "horizontal") {
     return (
       <form
         className="w-full px-4"
-        onSubmit={handleSubmit((data) => handleSearch(data))}
+        onSubmit={handleSubmit((data) => onSubmit(data))}
       >
         <div className="space-y-7">
           <div className="relative">
@@ -100,7 +100,7 @@ function SearchForm({ shape }) {
     return (
       <form
         className="w-full px-4"
-        onSubmit={handleSubmit((data) => handleSearch(data))}
+        onSubmit={handleSubmit((data) => onSubmit(data))}
       >
         <div className="flex flex-col items-center w-full justify-start space-y-4">
           <div className="w-full">

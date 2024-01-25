@@ -34,7 +34,12 @@ function BackgroundSearch() {
           Search your trip details to start sending
         </span>
         <div className="w-full">
-          <SearchForm shape={"horizontal"} />
+          <SearchForm
+            shape={"horizontal"}
+            handleSearch={(data) => {
+              console.log("data :", data);
+            }}
+          />
         </div>
       </div>
     </div>
