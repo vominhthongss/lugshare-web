@@ -4,8 +4,8 @@ import { failed, idle, loading, succeeded } from "../../constants/store";
 import { wrongEmailPassword } from "../../constants/messages";
 
 const initialState = {
-  status: "idle",
   data: undefined,
+  status: idle,
   error: undefined,
 };
 
@@ -27,7 +27,7 @@ export const authSlice = createSlice({
     toggleLoginForm: (state) => {
       state.showLoginForm = !state.showLoginForm;
     },
-    unmounte: (state) => {
+    unmounteAuth: (state) => {
       state.status = idle;
       state.error = undefined;
     },
@@ -52,6 +52,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { toggleLoginForm, unmounte } = authSlice.actions;
+export const { toggleLoginForm, unmounteAuth } = authSlice.actions;
 
 export default authSlice.reducer;

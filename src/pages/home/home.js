@@ -4,12 +4,16 @@ import BackgroundSearch from "../../components/background-search/background-sear
 import OrderCard from "../../components/order-card/order-card";
 import ThemeButton from "../../components/theme-button/theme-button";
 import LazyLoad from "react-lazy-load";
-import { getOrderList } from "../../store/order/orderSlice";
+import { getOrderList, unmounteOrder } from "../../store/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
+import { failed } from "../../constants/store";
+import { setAlert } from "../../store/main/mainSlice";
+import { errorAlert } from "../../constants/alerts";
+import { Link } from "react-router-dom";
 
 function Home() {
-  const { isLoading, orderList, error } = useSelector((state) => state.order);
+  const { status, orderList, error } = useSelector((state) => state.order);
   const options = {
     superLargeDesktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -35,13 +39,23 @@ function Home() {
 
   const dispatch = useDispatch();
 
-  const fetch = useCallback(() => {
-    dispatch(getOrderList());
-  }, [dispatch]);
-
   useEffect(() => {
-    fetch();
-  }, [fetch]);
+    if (!orderList) {
+      dispatch(getOrderList());
+    }
+    if (status === failed) {
+      dispatch(
+        setAlert({
+          show: true,
+          type: errorAlert,
+          content: error,
+        })
+      );
+    }
+    return () => {
+      dispatch(unmounteOrder());
+    };
+  }, [dispatch, orderList, status, error]);
 
   return (
     <div>
@@ -152,7 +166,7 @@ function Home() {
         <div>
           <div className="flex flex-col items-center md:px-[20%] px-0 space-y-5 py-10">
             <span className="text-5xl font-bold text-center">
-              Popular Destinations
+              Find orther orders
             </span>
             <span className="text-gray-400 font-bold text-xl text-center">
               Need a little inspiration? Browse orders from these cities with
@@ -160,12 +174,14 @@ function Home() {
             </span>
           </div>
           <div className="w-full flex justify-center">
-            <ThemeButton
-              name={"Learn more"}
-              variant={"contained"}
-              height={"3rem"}
-              width={"10rem"}
-            ></ThemeButton>
+            <Link to={"/finding"}>
+              <ThemeButton
+                name={"Finding"}
+                variant={"contained"}
+                height={"3rem"}
+                width={"10rem"}
+              ></ThemeButton>
+            </Link>
           </div>
         </div>
       </LazyLoad>
@@ -178,7 +194,7 @@ function Home() {
           >
             {orderList.map((order, index) => (
               <div key={index} className="p-4">
-                <OrderCard order={order} index={index}  />
+                <OrderCard order={order} index={index} />
               </div>
             ))}
           </Carousel>

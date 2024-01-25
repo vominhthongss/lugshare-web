@@ -3,7 +3,7 @@ import ThemeButton from "../theme-button/theme-button";
 import CustomTextField from "../custom-textfield/custom-textfield";
 import { ErrorMessage } from "@hookform/error-message";
 import { useDispatch, useSelector } from "react-redux";
-import { login, unmounte } from "../../store/auth/authSlice";
+import { login, unmounteAuth } from "../../store/auth/authSlice";
 import { useEffect } from "react";
 import { failed, succeeded } from "../../constants/store";
 import { setAlert, toggleLoginForm } from "../../store/main/mainSlice";
@@ -34,7 +34,7 @@ function Login() {
       );
     }
     return () => {
-      dispatch(unmounte());
+      dispatch(unmounteAuth());
     };
   }, [dispatch, status, error]);
   return (
